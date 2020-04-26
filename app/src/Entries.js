@@ -2,6 +2,7 @@ import React from 'react';
 import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import {Segment} from 'semantic-ui-react';
+import Entry from './Entry';
  
 class Entries extends React.Component {
 	
@@ -25,7 +26,8 @@ class Entries extends React.Component {
 	    	   <React.Fragment>
 		    		<SideNav
 			    		onSelect={(selected) => {
-			    			this.setState({content: selected.content});
+			    			console.log('selected ', selected);
+			    			this.setState({content: selected.content, title: selected.title, date: selected.dateCreated});
 			    	    }}
 		    		>
 		    	    <SideNav.Toggle />
@@ -42,7 +44,11 @@ class Entries extends React.Component {
 			    	    </SideNav.Nav>
 		    	    )}
 			       </SideNav>
-			       <p><center>{this.state.content}</center></p>
+			       <Entry
+			       		content={this.state.content}
+			       		title={this.state.title}
+			       		dateCreated={this.state.date}
+			       />
 		       </React.Fragment>
 	    );
 	  }
