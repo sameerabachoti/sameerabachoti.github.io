@@ -10,7 +10,6 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Entity
 public class Entry{
 	@Id

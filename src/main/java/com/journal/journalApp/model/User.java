@@ -10,7 +10,6 @@ import java.util.Set;
 
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Entity
 public class User{
 	@Id
