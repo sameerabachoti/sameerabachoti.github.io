@@ -1,6 +1,7 @@
 import React from 'react';
 import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
+import {Segment} from 'semantic-ui-react';
  
 class Entries extends React.Component {
 	
@@ -21,24 +22,28 @@ class Entries extends React.Component {
 		const entryList = this.state.entries;
 		console.log(this.state.entries);
 	    return (
-	         
-
-	    		<SideNav>
-	    	    <SideNav.Toggle />
-	    	    {this.state.entries.map(entry => 
-		    	    <SideNav.Nav defaultSelected={entry.title}>
-		    	        <NavItem eventKey={entry.title}>
-		    	            <NavIcon>
-		    	                <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
-		    	            </NavIcon>
-		    	            <NavText>
-		    	                {entry.title}
-		    	            </NavText>
-		    	        </NavItem>
-		    	    </SideNav.Nav>
-	    	    )}
-		       </SideNav>
-	    	 
+	    	   <React.Fragment>
+		    		<SideNav
+			    		onSelect={(selected) => {
+			    			this.setState({content: selected.content});
+			    	    }}
+		    		>
+		    	    <SideNav.Toggle />
+		    	    {this.state.entries.map(entry => 
+			    	    <SideNav.Nav defaultSelected={entry}>
+			    	        <NavItem eventKey={entry}>
+			    	            <NavIcon>
+			    	                <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
+			    	            </NavIcon>
+			    	            <NavText>
+			    	                {entry.title}
+			    	            </NavText>
+			    	        </NavItem>
+			    	    </SideNav.Nav>
+		    	    )}
+			       </SideNav>
+			       <p><center>{this.state.content}</center></p>
+		       </React.Fragment>
 	    );
 	  }
 }
