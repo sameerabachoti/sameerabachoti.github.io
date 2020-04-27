@@ -1,12 +1,12 @@
 import React from 'react';
-import {Segment, Header, Container} from 'semantic-ui-react';
+import {Segment, Header, Container, Divider} from 'semantic-ui-react';
 
 class Entry extends React.Component {
 	render (){
 		const { content, title, dateCreated } = this.props;
 		return(
 			<React.Fragment>
-				<Container>
+				<Container fluid textAlign="center">
 					<center>
 					<Header as="h3">{title}</Header>
 					<Segment>{dateCreated}</Segment>

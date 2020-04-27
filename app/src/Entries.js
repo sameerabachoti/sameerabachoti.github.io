@@ -1,14 +1,17 @@
 import React from 'react';
 import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-import {Segment} from 'semantic-ui-react';
+import {Segment, Button, Icon} from 'semantic-ui-react';
+import { withRouter, Router, Switch, Route } from 'react-router-dom';
 import Entry from './Entry';
- 
+import NewEntry from './NewEntry';
+
 class Entries extends React.Component {
 	
 	  constructor(props) {
 	    super(props);
 	    this.state = {entries: [], isLoading: true};
+	    this.routeChange = this.routeChange.bind(this);
 	  }
 
 	  componentDidMount() {
@@ -19,6 +22,13 @@ class Entries extends React.Component {
 	      .then(data => this.setState({entries: data, isLoading: false}));
 	  }
 	  
+	  routeChange() {
+		    this.setState({isNewEntry: true});
+		    this.setState({isEntry: false});
+		    let path = `/newEntry`;
+		    this.props.history.push(path);
+	  }
+	  
 	  render() {
 		const entryList = this.state.entries;
 		console.log(this.state.entries);
@@ -27,8 +37,12 @@ class Entries extends React.Component {
 		    		<SideNav
 			    		onSelect={(selected) => {
 			    			console.log('selected ', selected);
-			    			this.setState({content: selected.content, title: selected.title, date: selected.dateCreated});
-			    	    }}
+			    			if(selected){
+			    				this.setState({content: selected.content, title: selected.title, date: selected.dateCreated, id: selected.id});
+			    				this.setState({isNewEntry: false});
+			    				this.setState({isEntry: true});
+			    			}
+			    		}}
 		    		>
 		    	    <SideNav.Toggle />
 		    	    {this.state.entries.map(entry => 
@@ -43,15 +57,27 @@ class Entries extends React.Component {
 			    	        </NavItem>
 			    	    </SideNav.Nav>
 		    	    )}
+		    	    <SideNav.Nav>
+		    	    	<NavItem>
+		    	    		<NavIcon>
+    	                		<i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
+    	                	</NavIcon>
+		    	    		<NavText>
+		    	    			<button onClick={this.routeChange} style={{color: 'black'}}>Add Entry</button>
+		    	    		</NavText>
+		    	    	</NavItem>
+		    	    </SideNav.Nav>
 			       </SideNav>
-			       <Entry
+			       {this.state.isEntry && <Entry
 			       		content={this.state.content}
 			       		title={this.state.title}
 			       		dateCreated={this.state.date}
-			       />
+			       />}
+			       {this.state.isNewEntry && <NewEntry />}
+			       
 		       </React.Fragment>
 	    );
 	  }
 }
  
-export default Entries;
+export default withRouter(Entries);
