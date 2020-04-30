@@ -15,7 +15,7 @@ public class Entry{
 	@Id
     @GeneratedValue
     private Long id;
-	
+
 	private String title;
 	private String content;
 	private Date dateCreated;
@@ -23,7 +23,7 @@ public class Entry{
 	
 	@ManyToOne(cascade=CascadeType.PERSIST)
     private Category category;
-	
+
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	private  User user;
 
@@ -58,4 +58,29 @@ public class Entry{
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
 	}
+	
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 }

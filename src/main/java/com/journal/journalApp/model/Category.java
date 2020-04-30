@@ -14,7 +14,7 @@ import java.util.Set;
 public class Category{
 	@Id
     @GeneratedValue
-    private Long id;
+    private String id;
 	
 	private String name;
 	
