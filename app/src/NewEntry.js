@@ -22,18 +22,38 @@ class NewEntry extends React.Component {
 	    this.handleSubmit = this.handleSubmit.bind(this);
 	}
 	
+	componentDidMount(){
+		const {entry} = this.state;
+		entry.id = this.props.match.params.id;
+		//const entry = await (await fetch(`/api/entry/${this.props.match.params.id}`)).json();
+		//console.log("entry component did mount", this.props.match.params.id);
+		this.setState({entry});
+	}
+	
 	async handleSubmit(event) {
 	    event.preventDefault();
 	    const {entry} = this.state;
-
-	    await fetch('/api/entry', {
-	      method: (entry.id) ? 'PUT' : 'POST',
-	      headers: {
-	        'Accept': 'application/json',
-	        'Content-Type': 'application/json'
-	      },
-	      body: JSON.stringify(entry),
-	    });
+	    console.log("entry handle submit ", entry);
+	    if(entry.id){
+		    await fetch('/api/entry/:id', {
+		      method: 'PUT',
+		      headers: {
+		        'Accept': 'application/json',
+		        'Content-Type': 'application/json'
+		      },
+		      body: JSON.stringify(entry),
+		    });
+	    }
+	    else{
+	    	await fetch('/api/entry/', {
+			    method: 'POST',
+			    headers: {
+			      'Accept': 'application/json',
+			      'Content-Type': 'application/json'
+			    },
+			    body: JSON.stringify(entry),
+			 });
+	    }
 	    this.props.history.push('/');
 	 }
 	

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Segment, Header, Container, Divider} from 'semantic-ui-react';
 import { Button, ButtonGroup } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 class Entry extends React.Component {
 	
@@ -32,7 +33,7 @@ class Entry extends React.Component {
 					<center>
 					<br />
 					<ButtonGroup>
-			            <Button size="sm" color="primary">Edit</Button>{' '}
+			            <Button size="sm" color="primary" tag={Link} to={"/entry/" + id}>Edit</Button>{' '}
 			            <Button size="sm" color="danger" onClick={() => this.remove(id)}>Delete</Button>
 		            </ButtonGroup>
 					</center>

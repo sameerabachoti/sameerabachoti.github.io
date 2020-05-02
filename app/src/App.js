@@ -10,7 +10,8 @@ class App extends Component {
       <Router>
         <Switch>
           <Route path='/' exact={true} component={Entries}/>" +
-          <Route path='/newEntry' exact={true} component={Entries}/>
+          <Route path='/newEntry' exact={true} component={Entries}/>" +
+          <Route path='/entry/:id' exact={true} component={NewEntry}/>
         </Switch>
       </Router>
     )
