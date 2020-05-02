@@ -9,13 +9,14 @@ class NewEntry extends React.Component {
 		    title: '',
 		    content: '',
 		    dateCreated: '',
-		    dateModified: ''
+		    dateModified: '', 
+		    category: {name: ''}
 	};
 	
 	constructor(props) {
 	    super(props);
 	    this.state = {
-	    	entry: this.emptyEntry
+	    	entry: this.emptyEntry,
 	    };
 	    this.handleChange = this.handleChange.bind(this);
 	    this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,11 +38,18 @@ class NewEntry extends React.Component {
 	 }
 	
 	handleChange(event) {
+		console.log("event ", event.target.value);
 		const target = event.target;
 	    const value = target.value;
 	    const name = target.name;
+	    console.log("name ", name);
 	    let entry = {...this.state.entry};
+	    //let category = {...this.state.category};
 	    entry[name] = value;
+	    if(name=='category'){
+	    	entry[name] = {name: value}
+	    }
+	    console.log("entry ", entry);
 	    this.setState({entry});
 	}
 	
@@ -53,6 +61,11 @@ class NewEntry extends React.Component {
 		          <FormGroup>
 		            <Label for="title">Title</Label>
 		            <Input type="text" name="title" id="title" value={entry.title || ''}
+		                   onChange={this.handleChange} autoComplete="title"/>
+		          </FormGroup>
+		          <FormGroup>
+		            <Label for="category">Category</Label>
+		            <Input type="text" name="category" id="category" value={entry.category.name || ''}
 		                   onChange={this.handleChange} autoComplete="title"/>
 		          </FormGroup>
 		          <FormGroup>

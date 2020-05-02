@@ -2,6 +2,8 @@ package com.journal.journalApp.controller;
 
 import java.net.URISyntaxException;
 import java.util.Collection;
+import java.util.Date;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,6 @@ import com.journal.journalApp.model.Category;
 import com.journal.journalApp.model.CategoryRepository;
 import com.journal.journalApp.model.Entry;
 import com.journal.journalApp.model.EntryRepository;
-import com.journal.journalApp.model.User;
 import com.journal.journalApp.model.UserRepository;
 
 @RestController
@@ -41,12 +42,14 @@ class EntryController {
     }
 
 	@PostMapping("/entry")
-    public void createGroup(@Valid @RequestBody Entry entry) throws URISyntaxException {
-		Category category = categoryRepository.findById("1");
-		User user = userRepository.findById("1");
+    public void createEntry(@Valid @RequestBody Entry entry) throws URISyntaxException {
+		Date today = new Date();
+		Category category = new Category();
+		category.setName(entry.getCategory().getName());
 		entry.setCategory(category);
-		entry.setUser(user);
-        entryRepository.save(entry);
+		entry.setDateCreated(today);
+		entryRepository.save(entry);
+		//User user = userRepository.findById("1");
     }
 	
 }

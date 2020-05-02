@@ -31,6 +31,7 @@ class Entries extends React.Component {
 	  
 	  render() {
 		const entryList = this.state.entries;
+		console.log("entryList", entryList);
 		console.log(this.state.entries);
 	    return (
 	    	   <React.Fragment>
@@ -38,7 +39,7 @@ class Entries extends React.Component {
 			    		onSelect={(selected) => {
 			    			console.log('selected ', selected);
 			    			if(selected){
-			    				this.setState({content: selected.content, title: selected.title, date: selected.dateCreated, id: selected.id});
+			    				this.setState({content: selected.content, title: selected.title, category: selected.category.name, date: selected.dateCreated, id: selected.id});
 			    				this.setState({isNewEntry: false});
 			    				this.setState({isEntry: true});
 			    			}
@@ -70,6 +71,7 @@ class Entries extends React.Component {
 			       </SideNav>
 			       {this.state.isEntry && <Entry
 			       		content={this.state.content}
+			       		category={this.state.category}
 			       		title={this.state.title}
 			       		dateCreated={this.state.date}
 			       />}
