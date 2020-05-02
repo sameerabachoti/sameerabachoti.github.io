@@ -16,7 +16,6 @@ class Entries extends React.Component {
 
 	  componentDidMount() {
 	    this.setState({isLoading: true});
-	    console.log("component did mount");
 	    fetch('api/entries')
 	      .then(response => response.json())
 	      .then(data => this.setState({entries: data, isLoading: false}));
@@ -31,7 +30,6 @@ class Entries extends React.Component {
 	  
 	  render() {
 		const entryList = this.state.entries;
-		console.log("entryList", entryList);
 		console.log(this.state.entries);
 	    return (
 	    	   <React.Fragment>
@@ -39,7 +37,7 @@ class Entries extends React.Component {
 			    		onSelect={(selected) => {
 			    			console.log('selected ', selected);
 			    			if(selected){
-			    				this.setState({content: selected.content, title: selected.title, category: selected.category.name, date: selected.dateCreated, id: selected.id});
+			    				this.setState({id: selected.id, content: selected.content, title: selected.title, category: selected.category.name, date: selected.dateCreated, id: selected.id});
 			    				this.setState({isNewEntry: false});
 			    				this.setState({isEntry: true});
 			    			}
@@ -70,6 +68,7 @@ class Entries extends React.Component {
 		    	    </SideNav.Nav>
 			       </SideNav>
 			       {this.state.isEntry && <Entry
+			    	   	id={this.state.id}
 			       		content={this.state.content}
 			       		category={this.state.category}
 			       		title={this.state.title}

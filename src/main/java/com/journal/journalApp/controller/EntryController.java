@@ -7,7 +7,10 @@ import java.util.Date;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +42,12 @@ class EntryController {
 	@GetMapping("/entries")
     Collection<Entry> entries() {
         return entryRepository.findAll();
+	}
+	
+	@DeleteMapping("/entry/{id}")
+    public void deleteEntry(@PathVariable Long id) {
+        System.err.println("delete entry" + id);
+        entryRepository.deleteById(id);
     }
 
 	@PostMapping("/entry")

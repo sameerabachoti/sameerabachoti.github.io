@@ -1,9 +1,24 @@
 import React from 'react';
 import {Segment, Header, Container, Divider} from 'semantic-ui-react';
+import { Button, ButtonGroup } from 'reactstrap';
 
 class Entry extends React.Component {
+	
+	async remove(id) {
+	   console.log("remove id ", id);
+	    await fetch(`/api/entry/${id}`, {
+	      method: 'DELETE',
+	      headers: {
+	        'Accept': 'application/json',
+	        'Content-Type': 'application/json'
+	      }
+	    }).then(() => {
+	      console.log("done");
+	    });
+	}
+	
 	render (){
-		const { category, content, title, dateCreated } = this.props;
+		const { id, category, content, title, dateCreated } = this.props;
 		return(
 			<React.Fragment>
 				<Container fluid textAlign="center">
@@ -13,6 +28,13 @@ class Entry extends React.Component {
 					<Segment>{category}</Segment>
 					<br />
 					<Segment>{content}</Segment>
+					</center>
+					<center>
+					<br />
+					<ButtonGroup>
+			            <Button size="sm" color="primary">Edit</Button>{' '}
+			            <Button size="sm" color="danger" onClick={() => this.remove(id)}>Delete</Button>
+		            </ButtonGroup>
 					</center>
 				</Container>
 			</React.Fragment>
