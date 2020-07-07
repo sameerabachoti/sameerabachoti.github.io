@@ -1,8 +1,8 @@
 package com.journal.journalApp.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
@@ -10,15 +10,21 @@ import java.util.Set;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class User{
 	@Id
     @GeneratedValue
     private String id;
-	
+
 	private String firstName;
 	private String lastName;
 	private String email;
+	
+	public User(String id, String email){
+		this.id = id;
+		this.email = email;
+	}
 	
 	@ManyToMany
     private Set<Entry> entries;
@@ -45,5 +51,13 @@ public class User{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 }

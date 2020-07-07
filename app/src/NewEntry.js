@@ -54,22 +54,18 @@ class NewEntry extends React.Component {
 			    body: JSON.stringify(entry),
 			 });
 	    }
-	    this.props.history.push('/');
+	    this.props.history.push('/entries');
 	 }
 	
 	handleChange(event) {
-		console.log("event ", event.target.value);
 		const target = event.target;
 	    const value = target.value;
 	    const name = target.name;
-	    console.log("name ", name);
 	    let entry = {...this.state.entry};
-	    //let category = {...this.state.category};
 	    entry[name] = value;
 	    if(name=='category'){
 	    	entry[name] = {name: value}
 	    }
-	    console.log("entry ", entry);
 	    this.setState({entry});
 	}
 	
