@@ -29,22 +29,32 @@ class Home extends React.Component {
 	    }
 	}
 
-	login() {
+	login = () => {
 	    let port = (window.location.port ? ':' + window.location.port : '');
 	    if (port === ':3000') {
 	      port = ':8080';
 	    }
 	    window.location.href = '//' + window.location.hostname + port + '/private';
 	}
+	
+	logout = () => {
+	    fetch('/api/logout', {method: 'POST', credentials: 'include',
+	      headers: {'X-XSRF-TOKEN': this.state.csrfToken}}).then(res => res.json())
+	      .then(response => {
+	        window.location.href = response.logoutUrl + "?id_token_hint=" +
+	          response.idToken + "&post_logout_redirect_uri=" + window.location.origin;
+	      });
+	  }
 
 	render(){
 		return(
 			<React.Fragment>
-				<center>
-			        <Button size="lg" color="primary" tag={Link} to={"/register"}>Register</Button>{'  '}
-			        <Button size="lg" color="danger" onClick={this.login}>Login</Button>
-				</center>
-			</React.Fragment>
+			{this.state.isAuthenticated ?
+				<div>
+				   <center><Button color="danger" onClick={this.logout}>Logout</Button></center>
+				</div> :
+		   <center><Button size="lg" color="success" onClick={this.login}>Login</Button></center>}
+		   </React.Fragment>
 		);
 	}
 }

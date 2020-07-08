@@ -35,7 +35,6 @@ class Entries extends React.Component {
 	    	   <React.Fragment>
 		    		<SideNav
 			    		onSelect={(selected) => {
-			    			console.log('selected ', selected);
 			    			if(selected){
 			    				this.setState({id: selected.id, content: selected.content, title: selected.title, category: selected.category.name, date: selected.dateCreated, id: selected.id});
 			    				this.setState({isNewEntry: false});
