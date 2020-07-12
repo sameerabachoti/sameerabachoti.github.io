@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -66,6 +67,12 @@ class EntryController {
         System.err.println("delete entry" + id);
         entryRepository.deleteById(id);
     }
+	
+	@GetMapping("/entry/{id}")
+	public Optional<Entry> getEntry(@PathVariable String id){
+		System.err.println("id "+ id);
+		return entryRepository.findById(Long.parseLong(id));
+	}
 
 	@PostMapping("/entry")
     public void createEntry(@Valid @RequestBody Entry entry) throws URISyntaxException {

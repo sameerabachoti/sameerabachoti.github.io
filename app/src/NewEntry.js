@@ -26,13 +26,10 @@ class NewEntry extends React.Component {
 	    this.handleSubmit = this.handleSubmit.bind(this);
 	}
 	
-	componentDidMount(){
+	async componentDidMount() {
 		const {entry} = this.state;
 		entry.id = this.props.match.params.id;
 		this.setState({entry});
-	}
-	
-	async componentDidMount() {
 	    const response = await fetch('/api/user', {credentials: 'include'});
 	    const body = await response.text();
 	    console.log("user ", body);
@@ -41,6 +38,14 @@ class NewEntry extends React.Component {
 		} else {
 		    this.setState({isAuthenticated: true, user: JSON.parse(body)})
 		}
+	    
+	    if(entry.id){
+	    	const entryDetails = await fetch(`/api/entry/${entry.id}`);
+	    	const entryResponse = await entryDetails.text();
+	    	if (entryResponse !== '') {
+	    		this.setState({entry: JSON.parse(entryResponse)});
+			} 
+	    }
 	}
 	
 	async handleSubmit(event) {
