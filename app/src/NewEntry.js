@@ -10,7 +10,11 @@ class NewEntry extends React.Component {
 		    content: '',
 		    dateCreated: '',
 		    dateModified: '', 
-		    category: {name: ''}
+		    category: {name: ''},
+		    user: {id: '',
+				firstName: '',
+				lastName: '',
+				email: ''}
 	};
 	
 	constructor(props) {
@@ -30,9 +34,22 @@ class NewEntry extends React.Component {
 		this.setState({entry});
 	}
 	
+	async componentDidMount() {
+	    const response = await fetch('/api/user', {credentials: 'include'});
+	    const body = await response.text();
+	    console.log("user ", body);
+	    if (body === '') {
+		    this.setState(({isAuthenticated: false}))
+		} else {
+		    this.setState({isAuthenticated: true, user: JSON.parse(body)})
+		}
+	}
+	
 	async handleSubmit(event) {
 	    event.preventDefault();
 	    const {entry} = this.state;
+	    console.log("this state user ");
+	    entry.user.firstName = this.state.user.given_name;
 	    console.log("entry handle submit ", entry);
 	    if(entry.id){
 		    await fetch('/api/entry/:id', {
@@ -41,18 +58,19 @@ class NewEntry extends React.Component {
 		        'Accept': 'application/json',
 		        'Content-Type': 'application/json'
 		      },
-		      body: JSON.stringify(entry),
+		      body: JSON.stringify(entry)
 		    });
 	    }
 	    else{
-	    	await fetch('/api/entry/', {
+	    	await fetch('/api/entry/', {   	
 			    method: 'POST',
 			    headers: {
 			      'Accept': 'application/json',
 			      'Content-Type': 'application/json'
 			    },
-			    body: JSON.stringify(entry),
+			    body: JSON.stringify(entry)
 			 });
+	    	
 	    }
 	    this.props.history.push('/entries');
 	 }

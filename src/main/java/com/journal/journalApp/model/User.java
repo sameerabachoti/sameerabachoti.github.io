@@ -10,22 +10,16 @@ import java.util.Set;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class User{
 	@Id
     @GeneratedValue
-    private String id;
+    private Long id;
 
 	private String firstName;
 	private String lastName;
 	private String email;
-	
-	public User(String id, String email){
-		this.id = id;
-		this.email = email;
-	}
-	
+
 	@ManyToMany
     private Set<Entry> entries;
 
@@ -53,11 +47,11 @@ public class User{
 		this.email = email;
 	}
 	
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 }

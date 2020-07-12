@@ -18,12 +18,6 @@ class Entry extends React.Component {
 	    });
 	}
 	
-	async componentDidMount() {
-	    const response = await fetch('/api/user', {credentials: 'include'});
-	    const body = await response.text();
-	    console.log("body ", body);
-	}
-	
 	render (){
 		const { id, category, content, title, dateCreated } = this.props;
 		return(
