@@ -1,13 +1,17 @@
 package com.journal.journalApp.controller;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,8 +46,19 @@ class EntryController {
     }
 	
 	@GetMapping("/entries")
-    Collection<Entry> entries() {
-        return entryRepository.findAll();
+    ArrayList<Entry> entries(@AuthenticationPrincipal OAuth2User user) {
+        Collection<Entry> entries = entryRepository.findAll();
+        ArrayList<Entry> userEntries = new ArrayList<>();
+        String userEmail = user.getAttribute("email");
+        for(Entry entry : entries){
+        	if(entry.getUser() != null){
+	        	if(entry.getUser().getEmail().equals(userEmail)){
+	        		userEntries.add(entry);
+	        	}
+        	}
+        }
+        
+        return userEntries;
 	}
 	
 	@DeleteMapping("/entry/{id}")
@@ -54,18 +69,22 @@ class EntryController {
 
 	@PostMapping("/entry")
     public void createEntry(@Valid @RequestBody Entry entry) throws URISyntaxException {
-		System.err.println("entry "+ entry.getUser().getFirstName());
+		User user = userRepository.findByEmail(entry.getUser().getEmail());
+		
+		if(user != null){
+			entry.setUser(user);
+		}
+						
 		Date today = new Date();
 		Category category = new Category();
 		category.setName(entry.getCategory().getName());
 		entry.setCategory(category);
 		entry.setDateCreated(today);
 		entryRepository.save(entry);
-		//User user = userRepository.findById("1");
     }
 	
 	@PutMapping("/entry/{id}")
-    public void updateGroup(@Valid @RequestBody Entry entry) {
+    public void updateEntry(@Valid @RequestBody Entry entry) {
         entryRepository.save(entry);
     }
 	

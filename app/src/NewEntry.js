@@ -29,8 +29,6 @@ class NewEntry extends React.Component {
 	componentDidMount(){
 		const {entry} = this.state;
 		entry.id = this.props.match.params.id;
-		//const entry = await (await fetch(`/api/entry/${this.props.match.params.id}`)).json();
-		//console.log("entry component did mount", this.props.match.params.id);
 		this.setState({entry});
 	}
 	
@@ -48,9 +46,9 @@ class NewEntry extends React.Component {
 	async handleSubmit(event) {
 	    event.preventDefault();
 	    const {entry} = this.state;
-	    console.log("this state user ");
 	    entry.user.firstName = this.state.user.given_name;
-	    console.log("entry handle submit ", entry);
+	    entry.user.lastName = this.state.user.family_name;
+	    entry.user.email = this.state.user.email;
 	    if(entry.id){
 		    await fetch('/api/entry/:id', {
 		      method: 'PUT',
