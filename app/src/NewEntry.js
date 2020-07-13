@@ -42,6 +42,7 @@ class NewEntry extends React.Component {
 	    if(entry.id){
 	    	const entryDetails = await fetch(`/api/entry/${entry.id}`);
 	    	const entryResponse = await entryDetails.text();
+	    	console.log("entry response ", entryResponse);
 	    	if (entryResponse !== '') {
 	    		this.setState({entry: JSON.parse(entryResponse)});
 			} 
@@ -76,6 +77,7 @@ class NewEntry extends React.Component {
 	    	
 	    }
 	    this.props.history.push('/entries');
+	    window.location.reload(false);
 	 }
 	
 	handleChange(event) {
@@ -94,20 +96,20 @@ class NewEntry extends React.Component {
 		const {entry} = this.state;
 		return(
 				<Container>
-		        <Form onSubmit={this.handleSubmit}>
+		         <Form onSubmit={this.handleSubmit} style={{"margin-left": "300px", "border-style": "solid", "border-width": "1px", "padding-left": "20px", "padding-bottom": "350px", "border-radius": "10px"}}>
 		          <FormGroup>
 		            <Label for="title">Title</Label>
-		            <Input type="text" name="title" id="title" value={entry.title || ''}
+		            <Input type="text"style={{width: "500px"}} name="title" id="title" value={entry.title || ''}
 		                   onChange={this.handleChange} autoComplete="title"/>
 		          </FormGroup>
 		          <FormGroup>
 		            <Label for="category">Category</Label>
-		            <Input type="text" name="category" id="category" value={entry.category.name || ''}
+		            <Input type="text" style={{width: "500px"}} name="category" id="category" value={entry.category.name || ''}
 		                   onChange={this.handleChange} autoComplete="title"/>
 		          </FormGroup>
 		          <FormGroup>
 		            <Label for="content">Entry</Label>
-		            <Input type="textarea" name="content" id="content" value={entry.content || ''}
+		            <Input type="textarea" style={{width: "500px", height: "100px"}} name="content" id="content" value={entry.content || ''}
 		                   onChange={this.handleChange} autoComplete="content"/>
 		          </FormGroup>
 		          <FormGroup>

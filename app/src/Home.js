@@ -3,6 +3,7 @@ import React from 'react';
 import { Button, ButtonGroup } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { withCookies } from 'react-cookie';
+import './App.css'; 
 
 class Home extends React.Component {
 	state = {

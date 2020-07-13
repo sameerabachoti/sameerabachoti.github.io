@@ -16,6 +16,7 @@ class Entry extends React.Component {
 	    }).then(() => {
 	      console.log("done");
 	    });
+	    window.location.reload(false);
 	}
 	
 	render (){
