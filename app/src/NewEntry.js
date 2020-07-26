@@ -94,9 +94,19 @@ class NewEntry extends React.Component {
 	
 	render() {
 		const {entry} = this.state;
+		
+		const divStyle = {
+				'margin-left': '300px', 
+				'border-style': 'solid',
+				'border-width': '1px',
+				'padding-left': '20px', 
+				'padding-bottom': '350px',
+				'border-radius': '10px'
+		};
+		
 		return(
 				<Container>
-		         <Form onSubmit={this.handleSubmit} style={{"margin-left": "300px", "border-style": "solid", "border-width": "1px", "padding-left": "20px", "padding-bottom": "350px", "border-radius": "10px"}}>
+		         <Form onSubmit={this.handleSubmit} style={divStyle}>
 		          <FormGroup>
 		            <Label for="title">Title</Label>
 		            <Input type="text"style={{width: "500px"}} name="title" id="title" value={entry.title || ''}
