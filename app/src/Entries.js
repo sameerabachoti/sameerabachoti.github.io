@@ -28,11 +28,32 @@ class Entries extends React.Component {
 		    this.props.history.push(path);
 	  }
 	  
+	  async componentDidMount() {
+		    const response = await fetch('/api/user', {credentials: 'include'});
+		    const body = await response.text();
+		    console.log("body ", body);
+		    if (body === '') {
+		      this.setState(({isAuthenticated: false}))
+		    } else {
+		      this.setState({isAuthenticated: true, user: JSON.parse(body)})
+		    }
+		}
+	  
+	  logout = () => {
+		    fetch('/api/logout', {method: 'POST', credentials: 'include',
+		      headers: {'X-XSRF-TOKEN': this.state.csrfToken}}).then(res => res.json())
+		      .then(response => {
+		        window.location.href = response.logoutUrl + "?id_token_hint=" +
+		          response.idToken + "&post_logout_redirect_uri=" + window.location.origin;
+		      });
+	  }
+	  
 	  render() {
 		const entryList = this.state.entries;
 		console.log(this.state.entries);
 	    return (
 	    	   <React.Fragment>
+	    	   		<Button style={{'margin-left': "1300px"}} onClick={this.logout}>Logout</Button>
 		    		<SideNav
 			    		onSelect={(selected) => {
 			    			if(selected){
@@ -74,7 +95,6 @@ class Entries extends React.Component {
 			       		dateCreated={this.state.date}
 			       />}
 			       {this.state.isNewEntry && <NewEntry />}
-			       
 		       </React.Fragment>
 	    );
 	  }

@@ -45,7 +45,7 @@ class Home extends React.Component {
 	        window.location.href = response.logoutUrl + "?id_token_hint=" +
 	          response.idToken + "&post_logout_redirect_uri=" + window.location.origin;
 	      });
-	  }
+	 }
 
 	render(){
 		const buttonStyle = {
