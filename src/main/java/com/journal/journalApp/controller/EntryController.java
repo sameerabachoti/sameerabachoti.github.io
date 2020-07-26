@@ -70,7 +70,6 @@ class EntryController {
 	
 	@GetMapping("/entry/{id}")
 	public Optional<Entry> getEntry(@PathVariable String id){
-		System.err.println("id "+ id);
 		return entryRepository.findById(Long.parseLong(id));
 	}
 
@@ -92,6 +91,10 @@ class EntryController {
 	
 	@PutMapping("/entry/{id}")
     public void updateEntry(@Valid @RequestBody Entry entry) {
+		Category category = new Category();
+		category.setName(entry.getCategory().getName());
+		categoryRepository.save(category);
+		entry.setCategory(category);
         entryRepository.save(entry);
     }
 	

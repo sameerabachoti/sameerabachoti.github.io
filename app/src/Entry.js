@@ -2,6 +2,7 @@ import React from 'react';
 import {Segment, Header, Container, Divider} from 'semantic-ui-react';
 import { Button, ButtonGroup } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import dateFormat from 'dateformat';
 
 class Entry extends React.Component {
 	
@@ -26,7 +27,7 @@ class Entry extends React.Component {
 				<Container fluid textAlign="center">
 					<center>
 					<Header as="h3">{title}</Header>
-					<Segment>{dateCreated}</Segment>
+					<Segment>{dateFormat(dateCreated, "mmmm dS, yyyy")}</Segment>
 					<Segment>{category}</Segment>
 					<br />
 					<Segment>{content}</Segment>

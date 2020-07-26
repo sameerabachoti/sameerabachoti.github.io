@@ -5,16 +5,26 @@ import {Segment, Button, Icon} from 'semantic-ui-react';
 import { withRouter, Router, Switch, Route } from 'react-router-dom';
 import Entry from './Entry';
 import NewEntry from './NewEntry';
+import { Link } from 'react-router-dom';
 
 class Entries extends React.Component {
 	
 	  constructor(props) {
 	    super(props);
-	    this.state = {entries: [], isLoading: true};
+	    this.state = {entries: [], user: [], isLoading: true};
 	    this.routeChange = this.routeChange.bind(this);
 	  }
 
-	  componentDidMount() {
+	  async componentDidMount() {
+		  const response = await fetch('/api/user', {credentials: 'include'});
+		    const body = await response.text();
+		    console.log("body ", body);
+		    if (body === '') {
+		      this.setState(({isAuthenticated: false}))
+		    } else {
+		      this.setState({isAuthenticated: true, user: JSON.parse(body)})
+		    }
+		    
 	    this.setState({isLoading: true});
 	    fetch('api/entries')
 	      .then(response => response.json())
@@ -28,17 +38,6 @@ class Entries extends React.Component {
 		    this.props.history.push(path);
 	  }
 	  
-	  async componentDidMount() {
-		    const response = await fetch('/api/user', {credentials: 'include'});
-		    const body = await response.text();
-		    console.log("body ", body);
-		    if (body === '') {
-		      this.setState(({isAuthenticated: false}))
-		    } else {
-		      this.setState({isAuthenticated: true, user: JSON.parse(body)})
-		    }
-		}
-	  
 	  logout = () => {
 		    fetch('/api/logout', {method: 'POST', credentials: 'include',
 		      headers: {'X-XSRF-TOKEN': this.state.csrfToken}}).then(res => res.json())
@@ -51,9 +50,32 @@ class Entries extends React.Component {
 	  render() {
 		const entryList = this.state.entries;
 		console.log(this.state.entries);
+		const userName = this.state.user.given_name;
+		
+		const titleStyle = {
+				'font-family': 'system-ui',
+				'font-size': '40px',
+				'text-transform': 'uppercase',
+				'margin-left': '625px',
+				'text-decoration': 'none'
+		}
+		
+		const userNameStyle = {
+				'font-family': 'system-ui',
+				'font-size': '20px',
+				'margin-left': '625px'	
+		}
+		
+		const logoutStyle = {
+				'margin-left': "1300px",
+				'margin-top': "-50px",
+				'cursor': "pointer"
+		}
+		
 	    return (
 	    	   <React.Fragment>
-	    	   		<Button style={{'margin-left': "1300px"}} onClick={this.logout}>Logout</Button>
+	    	        <div><a href='/' style={titleStyle}>Inspire</a><p style={logoutStyle} onClick={this.logout}>Logout</p></div>
+	    	        <p style={userNameStyle}>Welcome {userName}!</p>
 		    		<SideNav
 			    		onSelect={(selected) => {
 			    			if(selected){
@@ -82,7 +104,7 @@ class Entries extends React.Component {
     	                		<i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
     	                	</NavIcon>
 		    	    		<NavText>
-		    	    			<button onClick={this.routeChange} style={{color: 'black'}}>Add Entry</button>
+		    	    			<button onClick={this.routeChange} style={{color: 'black', cursor: 'pointer'}}>Add Entry</button>
 		    	    		</NavText>
 		    	    	</NavItem>
 		    	    </SideNav.Nav>
