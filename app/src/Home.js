@@ -57,7 +57,7 @@ class Home extends React.Component {
 			'font-family': 'system-ui',
 			'font-size': '60px',
 			'text-transform': 'uppercase',
-			'padding': '200px 610px 20px'
+			'padding': '100px 610px 20px'
 		}
 		
 		const backgroundStyle = {
@@ -73,15 +73,29 @@ class Home extends React.Component {
 				'font-style': 'italic'
 		}
 		
+		const logoutStyle = {
+				'cursor': "pointer",
+				'margin-left': '1350px'
+		}
+		
+		const imgStyle = {
+				'width': '20%',
+				'margin-left': '570px',
+				'margin-bottom': '20px',
+				'border-radius': '8px'
+		}
+		
+		
 		return(
 			<body style={backgroundStyle}>
 				<React.Fragment>
+				{this.state.isAuthenticated ? <p style={logoutStyle} onClick={this.logout}>Logout</p> : ''}
 				<div style={titleStyle}>Inspire</div>
+				<img style={imgStyle} src={require('./coffee.jpg')} alt="coffee" />
 				<div style={captionStyle}>A place to record your thoughts and ideas.</div>
 				{this.state.isAuthenticated ?
 					<div>
-					   <center><Button style={buttonStyle} color="danger" onClick={this.logout}>Logout</Button>
-					   <Button size="sm" color="primary" tag={Link} to={"/entries"}>See all entries</Button></center>
+					   <center><Button size="lg" style={buttonStyle} tag={Link} to={"/entries"}>See your journal now!</Button></center>
 					</div> :
 			   <center><Button style={buttonStyle} size="lg" onClick={this.login}>Login</Button></center>}
 				

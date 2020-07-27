@@ -22,23 +22,45 @@ class Entry extends React.Component {
 	
 	render (){
 		const { id, category, content, title, dateCreated } = this.props;
+		
+		const contentStyle = {
+				'font-family': 'Georgia'
+		}
+		
+		const entryStyle = {
+				'background-color': '#DEB887',
+				'padding-bottom': '350px',
+				'padding-left': '10px',
+				'width': '50%',
+				'margin-left': '300px',
+				'box-shadow': '5px 5px 2px grey'
+		}
+		
+		const buttonStyle = {
+				'margin-left': '300px',
+				'margin-top': '11px',
+		}
+		
+		const titleStyle = {
+				'text-transform': 'capitalize'
+		}
 		return(
 			<React.Fragment>
 				<Container fluid textAlign="center">
-					<center>
-					<Header as="h3">{title}</Header>
+				<div style={entryStyle}>
+					<Header as="h3" style={titleStyle}>{title}</Header>
 					<Segment>{dateFormat(dateCreated, "mmmm dS, yyyy")}</Segment>
-					<Segment>{category}</Segment>
+					<Segment style={titleStyle}>{category}</Segment>
 					<br />
-					<Segment>{content}</Segment>
-					</center>
+					<Segment style={contentStyle}>{content}</Segment>
 					<center>
 					<br />
-					<ButtonGroup>
-			            <Button size="sm" color="primary" tag={Link} to={"/entry/" + id}>Edit</Button>{' '}
-			            <Button size="sm" color="danger" onClick={() => this.remove(id)}>Delete</Button>
-		            </ButtonGroup>
 					</center>
+				</div>
+				<ButtonGroup style={buttonStyle}>
+		            <Button size="sm" color="secondary" tag={Link} to={"/entry/" + id}>Edit</Button>
+		            <Button size="sm" color="dark" onClick={() => this.remove(id)}>Delete</Button>
+	            </ButtonGroup>
 				</Container>
 			</React.Fragment>
 		);

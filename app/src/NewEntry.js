@@ -114,12 +114,13 @@ class NewEntry extends React.Component {
 		let isDisabled = errors.title || errors.category || errors.content;
 		
 		const divStyle = {
-				'margin-left': '300px', 
-				'border-style': 'solid',
-				'border-width': '1px',
-				'padding-left': '20px', 
-				'padding-bottom': '350px',
-				'border-radius': '10px'
+				'margin-left': '280px', 
+				'margin-right': '200px',
+				'margin-top': '10px',
+				'padding-left': '20px',
+				'padding-bottom': '2px',
+				'background-color': '#A9A9A9',
+				'padding-right': '10px',
 		};
 		
 		const error = {
@@ -144,7 +145,7 @@ class NewEntry extends React.Component {
 		          </FormGroup>
 		          <FormGroup>
 		            <Label for="content">Entry</Label>
-		            <Input type="textarea" style={{width: "500px", height: "100px"}} name="content" id="content" value={entry.content || ''}
+		            <Input type="textarea" style={{width: "600px", height: "350px"}} name="content" id="content" value={entry.content || ''}
 		                   onChange={this.handleChange} autoComplete="content"/>
 		            <span style={error}>{errors.content}</span>
 		          </FormGroup>

@@ -202,3 +202,6 @@ Caused by: org.h2.jdbc.JdbcSQLInvalidAuthorizationSpecException: Wrong user name
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:461)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
 	... 96 more
+2020-07-26 21:50:08 jdbc[34]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "CONTENT VARCHAR(255)": "STRINGDECODE('FindLaw has two purposes: educate people about the law and connect customers with lawyers. It caters to both purpo... (494)"; SQL statement:
+update entry set category_id=?, content=?, date_created=?, date_modified=?, title=?, user_id=? where id=? [22001-200]
