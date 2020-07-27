@@ -63,7 +63,9 @@ class Entries extends React.Component {
 		const userNameStyle = {
 				'font-family': 'system-ui',
 				'font-size': '20px',
-				'margin-left': '625px'	
+				'font-style': 'italic',
+				'margin-left': '610px',
+				'margin-top': '5px'
 		}
 		
 		const logoutStyle = {
@@ -72,11 +74,15 @@ class Entries extends React.Component {
 				'cursor': "pointer"
 		}
 		
+		const navStyle = {
+				'background-color': '#305e72'
+		}
+		
 	    return (
 	    	   <React.Fragment>
 	    	        <div><a href='/' style={titleStyle}>Inspire</a><p style={logoutStyle} onClick={this.logout}>Logout</p></div>
 	    	        <p style={userNameStyle}>Welcome {userName}!</p>
-		    		<SideNav
+		    		<SideNav style={navStyle}
 			    		onSelect={(selected) => {
 			    			if(selected){
 			    				this.setState({id: selected.id, content: selected.content, title: selected.title, category: selected.category.name, date: selected.dateCreated, id: selected.id});
@@ -104,7 +110,7 @@ class Entries extends React.Component {
     	                		<i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
     	                	</NavIcon>
 		    	    		<NavText>
-		    	    			<button onClick={this.routeChange} style={{color: 'black', cursor: 'pointer'}}>Add Entry</button>
+		    	    			<Button onClick={this.routeChange} style={{'color': 'black', 'cursor': 'pointer', 'margin-top': '8px'}}>Add Entry</Button>
 		    	    		</NavText>
 		    	    	</NavItem>
 		    	    </SideNav.Nav>
